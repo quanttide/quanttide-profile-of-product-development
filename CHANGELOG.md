@@ -2,8 +2,6 @@
 
 ## [0.1.0] - 2026-06-28
 
-## [v0.1.0]
-
 ### Added
 - Add AGENTS.md
 - Add contract.md for qtcloud-product and qtadmin
