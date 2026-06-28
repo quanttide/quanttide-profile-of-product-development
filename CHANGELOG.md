@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [0.1.1] - 2026-06-28
+
+### Added
+- Add contract.md and blueprint.md for qtcloud-devops
+
+### Changed
+- Update qtcloud-devops profile for cli/v0.6.1
+
 ## [0.1.0] - 2026-06-28
 
 ### Added
