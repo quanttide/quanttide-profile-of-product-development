@@ -1,0 +1,119 @@
+# 产品蓝图 · 量潮产品云 (QtCloud Product)
+
+> 核心问题：做的是不是用户要的？体验是否到位？技术对不对？
+
+---
+
+## 一、产品视角
+
+### 1. 产品定位
+
+- **产品名称**：QtCloud Studio — 用户故事地图可视化编辑器
+- **核心价值主张**：将产品团队的隐性结构知识显式化，通过共享的可视化用户故事地图画布，让团队成员看到完整的产品全景
+- **目标用户**：产品经理、设计师、工程师
+
+### 2. 功能域
+
+| 模块 | 职责 | 优先级 |
+|------|------|--------|
+| 用户故事地图画布 | 三层模型：用户活动泳道 → 任务卡片 → 故事卡片 | P0 |
+| MVP 发布线 | 可拖动的水平红线，区分 MVP 与未来迭代 | P0 |
+| 故事卡拖放 | 跨泳道拖放故事卡片，重新组织地图 | P0 |
+| 文档网站 | MyST Markdown 发布 PRD/IxD/ADD 文档 | P1 |
+| LLM PRD 编写 | AI 辅助生成 PRD（实验性） | P2 |
+
+### 3. 用户流程
+
+```
+1. PM 打开 Studio → 看到用户故事地图画布（含样本数据：对话/白板/笔记三个活动）
+2. PM 在泳道间拖放故事卡片 → 重新组织用户故事
+3. PM 拖动 MVP 发布线 → 标记当前版本范围
+4. 团队成员浏览地图 → 了解产品全貌和迭代计划
+```
+
+### 4. 设计决策
+
+| 决策 | 理由 | 舍弃 |
+|------|------|------|
+| Canvas 画布渲染 | 复杂图形场景下 DOM 性能不足 | DOM 的天然可访问性 |
+| Flutter 全平台 | 一套代码覆盖桌面/移动/Web | Web 包体积较大 |
+| 回调驱动数据流 | 简单明确，无需状态管理库 | 复杂状态时追踪困难 |
+| 不可变模型 (copyWith) | 避免副作用，数据流清晰 | 频繁 GC 开销 |
+
+---
+
+## 二、设计视角
+
+### 1. 布局结构
+
+画布为主的全屏布局。泳道横向排列（`SingleChildScrollView` + `Row`），每条泳道纵向堆叠任务卡片，故事卡片内嵌于任务卡片中。
+
+### 2. 核心组件
+
+| 组件 | 职责 |
+|------|------|
+| StoryMapCanvas | 顶层画布容器 + MVP 发布线拖拽 |
+| ActivityLane | 泳道容器（用户活动） |
+| TaskCard | 任务卡片 + 拖放目标（DragTarget） |
+| StoryCard | 故事明细卡（标题 + 阶段/状态标签，LongPressDraggable） |
+
+### 3. 样式方案
+
+- **主题**：Material 3，每条泳道和故事标签使用不同调色盘增强视觉区隔
+- **实现**：Flutter Material Design
+
+### 4. 交互
+
+- 横向滚动浏览泳道
+- 长按拖拽故事卡片跨泳道移动
+- MVP 发布线拖拽调整版本范围
+- 故事卡片点击交互（回调待实现业务逻辑）
+
+---
+
+## 三、技术视角
+
+### 1. 架构概览
+
+Flutter 桌面/Web 应用，纯客户端原型，无后端依赖。
+
+```
+StoryMapCanvasPage（根组件）
+  ├── models/        → 领域模型（StoryMap, UserActivity, UserTask, UserStory）
+  ├── widgets/       → 画布组件（Canvas, Lane, TaskCard, StoryCard）
+  └── main.dart      → 应用入口 + 样本数据
+```
+
+### 2. 技术栈
+
+| 层 | 技术 |
+|----|------|
+| UI 框架 | Flutter (Dart 3.10+), Material 3 |
+| 状态管理 | StatefulWidget + copyWith 不可变模式 |
+| 拖放 | Flutter 原生 Draggable / DragTarget |
+| 文档 | MyST Markdown (mystmd) → GitHub Pages |
+| CI/CD | GitHub Actions (docs deploy) |
+| 工具脚本 | Python (PRD 编写助手, LLM 调用) |
+
+### 3. 数据流
+
+```
+用户操作（拖放/点击/拖动发布线）
+    ↓
+回调事件（onStoryMove / onStoryTap / onMVPLineMove）
+    ↓
+上层组件更新数据（copyWith）
+    ↓
+画布重绘
+```
+
+数据纯内存，不持久化。所有模型不可变，通过 `copyWith` 创建新实例。
+
+### 4. 架构决策 (ADR)
+
+| ADR | 方案 | 理由 |
+|-----|------|------|
+| 领域模型命名 | StoryMap → UserActivity → UserTask → UserStory | 反映业务概念，遵循故事地图方法论 |
+| UI 组件命名 | Canvas → Lane → TaskCard → StoryCard | 反映视觉形态，与领域模型分离 |
+| 视图与逻辑分离 | 视图不修改数据，通过回调上传事件 | 画布不包含业务逻辑 |
+| 全平台 | Flutter | 一套代码覆盖桌面/移动/Web |
