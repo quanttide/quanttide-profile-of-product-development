@@ -32,6 +32,7 @@
 ### 发布
 
 - `release publish` — 完整发布流水线：
+  - 自动更新 Cargo.toml / pyproject.toml 版本号
   - 验证版本号格式
   - 自动 LLM 生成 CHANGELOG（可选）
   - 预检 CHANGELOG 完整性
@@ -39,6 +40,13 @@
   - 创建 GitHub Release
   - 打印 registry 发布提示
   - 分步回滚：任一步失败自动清理已创建资源
+
+### 状态查看
+
+- `release status` — 按 scope 分组展示发布状态
+  - 检测 GitHub Release 存在性和 body 同步
+  - 多语言配置文件版本检测（Rust / Python / JS / Dart / Go）
+  - scope→子目录映射（`.quanttide/devops/contract.yaml`）
 
 ---
 

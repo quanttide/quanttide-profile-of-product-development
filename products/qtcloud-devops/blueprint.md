@@ -41,15 +41,17 @@
 |------|------|--------|
 | code status | 扫描子模块同步状态 | P0 |
 | code sync | 自动同步子模块 | P0 |
-| release publish | 发布流水线（CHANGELOG → tag → Release） | P0 |
+| release publish | 发布流水线（版本更新 → CHANGELOG → tag → Release） | P0 |
+| release status | 按 scope 分组展示发布状态 | P0 |
 
 ### 3. 用户流程
 
 ```
 1. 研发进入领域仓库 → code status 查看各组件状态
 2. 发现有组件待同步 → code sync 一键同步
-3. 准备发布 → release publish --version vX.Y.Z --yes
-4. 工具校验 CHANGELOG → 创建 tag → 推送 → 创建 Release
+3. 准备发布 → release status 查看各 scope 发布状态
+4. 选择 scope 执行 → release publish --version cli/v0.6.1 --yes
+5. 工具自动更新版本号 → 校验 CHANGELOG → 创建 tag → 推送 → 创建 Release
 ```
 
 ### 4. 设计决策
@@ -66,7 +68,7 @@
 
 ### 1. 布局结构
 
-CLI 工具，两级子命令：`code`（组件管理）+ `release`（发布管理）。
+CLI 工具，两级子命令：`code`（组件管理）+ `release`（发布管理）。scope 配置通过 `.quanttide/devops/contract.yaml` 定义 scope→子目录映射。
 
 ### 2. 核心组件
 
