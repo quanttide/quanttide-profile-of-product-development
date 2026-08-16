@@ -128,7 +128,8 @@ ProductCloudScreen（根组件：顶部产品切换器 + 产品空间）
 | 拖放 | Flutter 原生 Draggable / DragTarget |
 | 文档 | MyST Markdown (mystmd) → GitHub Pages |
 | 种子数据 | assets/data/products.json（JSON，CLI 加工，Studio rootBundle 加载） |
-| CI/CD | GitHub Actions (docs deploy) |
+| CI/CD | GitHub Actions：deploy-docs（docs → Pages）+ deploy-studio（studio/* tag → OSS+CDN） |
+| 部署 | OSS 静态桶 + CDN product.cloud.quanttide.com（IaC：manifests/terraform） |
 | 工具脚本 | Python (PRD 编写助手, LLM 调用) |
 
 ### 3. 数据流
