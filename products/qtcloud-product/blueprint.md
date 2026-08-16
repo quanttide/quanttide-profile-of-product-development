@@ -54,10 +54,11 @@
 ### 3. 用户流程
 
 ```
-1. PM 打开 Studio → 看到用户故事地图画布（含样本数据：对话/白板/笔记三个活动）
-2. PM 在泳道间拖放故事卡片 → 重新组织用户故事
-3. PM 拖动 MVP 发布线 → 标记当前版本范围
-4. 团队成员浏览地图 → 了解产品全貌和迭代计划
+1. PM 打开 Studio → 看到产品组合视图（种子数据：qtcloud-devops / qtcloud-product / qtcloud-code 三个产品）
+2. PM 选择产品 → 看到该产品的用户故事地图画布，了解其设计思路
+3. PM 在泳道间拖放故事卡片 → 重新组织用户故事
+4. PM 拖动 MVP 发布线 → 标记当前版本范围
+5. 团队成员浏览地图 → 了解产品全貌和迭代计划
 ```
 
 ### 4. 设计决策
@@ -107,10 +108,11 @@
 Flutter 桌面/Web 应用，纯客户端原型，无后端依赖。
 
 ```
-StoryMapCanvasPage（根组件）
-  ├── models/        → 领域模型（StoryMap, UserActivity, UserTask, UserStory）
+PortfolioPage（根组件）
+  ├── models/        → 领域模型（Product, StoryMap, UserActivity, UserTask, UserStory）
+  ├── data/          → 种子数据（三个实验产品：qtcloud-devops / qtcloud-product / qtcloud-code）
   ├── widgets/       → 画布组件（Canvas, Lane, TaskCard, StoryCard）
-  └── main.dart      → 应用入口 + 样本数据
+  └── main.dart      → 应用入口 + 产品组合页
 ```
 
 ### 2. 技术栈
