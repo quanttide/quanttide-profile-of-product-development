@@ -111,11 +111,12 @@
 Flutter 桌面/Web 应用，纯客户端原型，无后端依赖。
 
 ```
-ProductCloudPage（根组件：顶部产品切换器 + 产品空间）
+ProductCloudScreen（根组件：顶部产品切换器 + 产品空间）
   ├── models/        → 领域模型（Product, StoryMap, UserActivity, UserTask, UserStory）
-  ├── assets/data/   → 种子数据 products.json（CLI 加工，Studio 渲染）
+  ├── assets/data/   → 种子数据（manifest + products/*.json，CLI 加工，Studio 渲染）
+  ├── screens/       → 页面模块（ProductCloudScreen / RequirementScreen / SpecificationScreen）
   ├── widgets/       → 画布组件（Canvas, ActivityLayerRow, TaskLayerRow, ReleaseRow, StoryCard）
-  └── main.dart      → 应用入口 + 产品切换器 + 空间模块（需求/规格）
+  └── main.dart      → 应用入口（加载种子数据 → ProductCloudScreen）
 ```
 
 ### 2. 技术栈
