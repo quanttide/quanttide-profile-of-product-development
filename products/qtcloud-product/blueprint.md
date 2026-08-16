@@ -113,7 +113,7 @@ Flutter 桌面/Web 应用，纯客户端原型，无后端依赖。
 ```
 ProductCloudPage（根组件：顶部产品切换器 + 产品空间）
   ├── models/        → 领域模型（Product, StoryMap, UserActivity, UserTask, UserStory）
-  ├── data/          → 种子数据（三个实验产品：qtcloud-devops / qtcloud-product / qtcloud-code）
+  ├── assets/data/   → 种子数据 products.json（CLI 加工，Studio 渲染）
   ├── widgets/       → 画布组件（Canvas, ActivityLayerRow, TaskLayerRow, ReleaseRow, StoryCard）
   └── main.dart      → 应用入口 + 产品切换器 + 空间模块（需求/规格）
 ```
@@ -126,6 +126,7 @@ ProductCloudPage（根组件：顶部产品切换器 + 产品空间）
 | 状态管理 | StatefulWidget + copyWith 不可变模式 |
 | 拖放 | Flutter 原生 Draggable / DragTarget |
 | 文档 | MyST Markdown (mystmd) → GitHub Pages |
+| 种子数据 | assets/data/products.json（JSON，CLI 加工，Studio rootBundle 加载） |
 | CI/CD | GitHub Actions (docs deploy) |
 | 工具脚本 | Python (PRD 编写助手, LLM 调用) |
 
