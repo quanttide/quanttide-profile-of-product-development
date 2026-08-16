@@ -85,11 +85,11 @@
 | StoryMapCanvas | 顶层画布容器 + MVP 发布线拖拽 |
 | ActivityLane | 泳道容器（用户活动） |
 | TaskCard | 任务卡片 + 拖放目标（DragTarget） |
-| StoryCard | 故事明细卡（标题 + 阶段/状态标签，LongPressDraggable） |
+| StoryCard | 故事明细卡（标题 + 描述 + 状态圆点，LongPressDraggable） |
 
 ### 3. 样式方案
 
-- **主题**：Material 3，每条泳道和故事标签使用不同调色盘增强视觉区隔
+- **主题**：Material 3，视觉减负——泳道统一浅灰底 + 细边框，列头小色标；故事卡片白色，状态用圆点（🟢 完成 / 🟡 进行中 / ⚪ 待办），MVP 发布线为细浅色虚线
 - **实现**：Flutter Material Design
 
 ### 4. 交互
