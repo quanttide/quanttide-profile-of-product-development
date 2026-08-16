@@ -88,11 +88,11 @@
 | ActivityLayerRow | 活动层（橙色，跨列合并） |
 | TaskLayerRow | 任务层（紫色，每列一个任务） |
 | ReleaseRow | Release 行（可折叠，故事卡片 + 拖放目标） |
-| StoryCard | 故事明细卡（标题 + 描述 + 状态圆点，LongPressDraggable） |
+| StoryCard | 故事明细卡（仅标题，LongPressDraggable） |
 
 ### 3. 样式方案
 
-- **主题**：Material 3，视觉减负——活动层橙 `#FFB74D`、任务层紫 `#B39DDB` 规范色；故事卡片白色细边框，状态用圆点（🟢 完成 / 🟡 进行中 / ⚪ 待办）；Release 行灰分隔线
+- **主题**：Material 3，视觉减负——活动层橙 `#FFB74D`、任务层紫 `#B39DDB` 规范色；故事卡片白色细边框，仅展示标题；Release 行灰分隔线
 - **实现**：Flutter Material Design
 
 ### 4. 交互
@@ -149,6 +149,6 @@ ProductCloudPage（根组件：顶部产品切换器 + 产品空间）
 | ADR | 方案 | 理由 |
 |-----|------|------|
 | 领域模型命名 | StoryMap → UserActivity → UserTask → UserStory | 反映业务概念，遵循故事地图方法论 |
-| UI 组件命名 | Canvas → Lane → TaskCard → StoryCard | 反映视觉形态，与领域模型分离 |
+| UI 组件命名 | Canvas → ActivityLayerRow → TaskLayerRow → ReleaseRow → StoryCard | 反映视觉形态，与领域模型分离 |
 | 视图与逻辑分离 | 视图不修改数据，通过回调上传事件 | 画布不包含业务逻辑 |
 | 全平台 | Flutter | 一套代码覆盖桌面/移动/Web |
