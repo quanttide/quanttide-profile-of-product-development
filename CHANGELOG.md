@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [Unreleased]
+
+### Added
+- Add product profile for qtcrowd (量潮众包), based on quanttide-tech intention/journal
+
 ## [0.1.1] - 2026-06-28
 
 ### Added
