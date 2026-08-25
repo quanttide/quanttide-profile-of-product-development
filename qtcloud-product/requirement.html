@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>量潮产品云 · 用户故事地图</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --card-bg: #ffffff;
+    --border: #e3e6ea;
+    --text: #1f2937;
+    --muted: #6b7280;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 24px;
+  }
+  header {
+    max-width: 1500px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  header h1 { font-size: 24px; font-weight: 700; }
+  header .persona {
+    font-size: 14px;
+    color: var(--muted);
+    background: #eef1f5;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 14px;
+  }
+  .toolbar { max-width: 1500px; margin: 0 auto 16px; }
+  .toolbar input {
+    width: 320px;
+    max-width: 100%;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    outline: none;
+  }
+  .toolbar input:focus { border-color: #4f7cff; box-shadow: 0 0 0 3px rgba(79,124,255,.15); }
+  .map-wrap {
+    max-width: 1500px;
+    margin: 0 auto;
+    overflow-x: auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  }
+  .map {
+    display: grid;
+    grid-template-columns: repeat(11, minmax(176px, 1fr));
+    min-width: 1400px;
+  }
+  /* 第一行：活动（背骨） */
+  .activity {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(255,255,255,.25);
+  }
+  .activity .act-desc {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-top: 6px;
+    opacity: .9;
+  }
+  /* 第二行：任务 */
+  .task {
+    background: #fbfcfd;
+    border-bottom: 1px solid var(--border);
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .task .task-count {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--muted);
+    background: #eef1f5;
+    border-radius: 999px;
+    padding: 0 7px;
+    line-height: 18px;
+    margin-left: 4px;
+  }
+  .task .task-desc {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-top: 5px;
+  }
+  /* 第三行及以下：故事卡片 */
+  .story {
+    background: #fff;
+    border: 1px solid #e9ecf0;
+    border-left: 3px solid var(--accent, #4f7cff);
+    border-radius: 6px;
+    padding: 8px 9px;
+    font-size: 12px;
+    line-height: 1.55;
+    color: #374151;
+    margin: 6px 6px 0;
+    transition: opacity .15s;
+  }
+  .story.hidden { opacity: .25; }
+  footer {
+    max-width: 1500px;
+    margin: 14px auto 0;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>量潮产品云 · 用户故事地图</h1>
+  <div class="persona">👤 用户画像：需要统筹规划产品研发节奏的产研负责人</div>
+</header>
+
+<div class="toolbar">
+  <input id="filter" type="search" placeholder="🔍 过滤故事卡片（如：评审、拖拽、AI）…">
+</div>
+
+<div class="map-wrap">
+  <div class="map">
+
+    <!-- ════ 第一行：活动（背骨） ════ -->
+    <div class="activity" style="background:#4f7cff; grid-column: 1 / span 1">产品边界<span class="act-desc">先登记产品、划分产品边界，再进入需求梳理。</span></div>
+    <div class="activity" style="background:#22a06b; grid-column: 2 / span 4">需求<span class="act-desc">从研发日志捕捉用户故事：AI 辅助划分层级并定位，人工调整后经需求评审确认格式，得到需求地图。</span></div>
+    <div class="activity" style="background:#e8912d; grid-column: 6 / span 1">规格</div>
+    <div class="activity" style="background:#8b5cf6; grid-column: 7 / span 1">迭代</div>
+    <div class="activity" style="background:#e5484d; grid-column: 8 / span 2">验收</div>
+    <div class="activity" style="background:#0d9488; grid-column: 10 / span 2">运营</div>
+
+    <!-- ════ 第二行：任务 ════ -->
+    <div class="task" style="grid-column: 1">管理产品清单<span class="task-count">2</span></div>
+    <div class="task" style="grid-column: 2">捕捉用户故事<span class="task-count">3</span><span class="task-desc">从原始话语捕捉，先捕捉出一个格式作为划分基础。</span></div>
+    <div class="task" style="grid-column: 3">划分层级<span class="task-count">3</span><span class="task-desc">根据人类理解与 AI 判断归类定位，并在故事地图上定位。</span></div>
+    <div class="task" style="grid-column: 4">人工调整<span class="task-count">4</span><span class="task-desc">AI 辅助划分后由人调整，调整过程被记录并反馈给 AI。</span></div>
+    <div class="task" style="grid-column: 5">需求评审<span class="task-count">3</span><span class="task-desc">校验地图质量，确认格式正确后定稿进入后续阶段。</span></div>
+    <div class="task" style="grid-column: 6">事件风暴<span class="task-count">1</span></div>
+    <div class="task" style="grid-column: 7">组合决策<span class="task-count">3</span></div>
+    <div class="task" style="grid-column: 8">用例管理<span class="task-count">1</span></div>
+    <div class="task" style="grid-column: 9">敏捷验收<span class="task-count">1</span></div>
+    <div class="task" style="grid-column: 10">收集运营数据<span class="task-count">1</span></div>
+    <div class="task" style="grid-column: 11">数据驱动找结构<span class="task-count">1</span></div>
+
+    <!-- ════ 第三行及以下：故事卡片 ════ -->
+    <div class="story" style="--accent:#4f7cff; grid-column: 1; grid-row: 3">用户要登记一个新产品，写明名称、状态、负责人</div>
+    <div class="story" style="--accent:#4f7cff; grid-column: 1; grid-row: 4">用户要在多个产品间切换，分别管理不同产品</div>
+
+    <div class="story" style="--accent:#22a06b; grid-column: 2; grid-row: 3">用户要选择日志来源（产品流、时间段），把原始零碎话语交给 AI</div>
+    <div class="story" style="--accent:#22a06b; grid-column: 2; grid-row: 4">用户要先捕捉出一个用户故事格式（如"用户要…"句式），作为划分层级的基础</div>
+    <div class="story" style="--accent:#22a06b; grid-column: 2; grid-row: 5">用户要看到从日志中捕捉出的候选用户故事列表</div>
+
+    <div class="story" style="--accent:#22a06b; grid-column: 3; grid-row: 3">用户要借助 AI 判断每条内容属于用户活动、用户任务还是用户故事细节</div>
+    <div class="story" style="--accent:#22a06b; grid-column: 3; grid-row: 4">用户要在故事地图上看到每条内容被定位到合适的位置</div>
+    <div class="story" style="--accent:#22a06b; grid-column: 3; grid-row: 5">用户要查看 AI 划分的依据（来源日志、判断理由），便于复核</div>
+
+    <div class="story" style="--accent:#22a06b; grid-column: 4; grid-row: 3">用户要调整 AI 的层级划分（活动/任务/故事细节之间移动）</div>
+    <div class="story" style="--accent:#22a06b; grid-column: 4; grid-row: 4">用户要标记 AI 输出中不符合用户视角的内容，让 AI 基于反馈重新划分</div>
+    <div class="story" style="--accent:#22a06b; grid-column: 4; grid-row: 5">用户要检查故事卡片的颗粒度是否一致，合并过细或过粗的卡片</div>
+    <div class="story" style="--accent:#22a06b; grid-column: 4; grid-row: 6">用户要能编辑、合并、拆分故事卡片，把草稿调整成自己的地图</div>
+
+    <div class="story" style="--accent:#22a06b; grid-column: 5; grid-row: 3">用户要在一块画布上看到用户故事地图的三层结构（活动/任务/故事卡）</div>
+    <div class="story" style="--accent:#22a06b; grid-column: 5; grid-row: 4">用户要拖拽故事卡片，重新组织地图结构</div>
+    <div class="story" style="--accent:#22a06b; grid-column: 5; grid-row: 5">用户要以评审视角校验地图，确认格式无误后，将地图作为需求梳理的结果进入后续阶段</div>
+
+    <div class="story" style="--accent:#e8912d; grid-column: 6; grid-row: 3">用户要用事件风暴的方式梳理领域事件和业务规则</div>
+
+    <div class="story" style="--accent:#8b5cf6; grid-column: 7; grid-row: 3">用户要拖动 MVP 发布线，标记当前版本与未来迭代的边界</div>
+    <div class="story" style="--accent:#8b5cf6; grid-column: 7; grid-row: 4">用户要查看跨产品的组合视图（成熟度、投入分布、版本时间线）</div>
+    <div class="story" style="--accent:#8b5cf6; grid-column: 7; grid-row: 5">用户要管理产品之间的关系，支撑产品体系的整体决策</div>
+
+    <div class="story" style="--accent:#e5484d; grid-column: 8; grid-row: 3">用户要管理验收用例，验证产品是否满足需求</div>
+
+    <div class="story" style="--accent:#e5484d; grid-column: 9; grid-row: 3">用户要找到比用例更敏捷的成体系验收方法，跟上敏捷节奏</div>
+
+    <div class="story" style="--accent:#0d9488; grid-column: 10; grid-row: 3">用户要收集实际运营数据（包括各类观测数据）</div>
+
+    <div class="story" style="--accent:#0d9488; grid-column: 11; grid-row: 3">用户要通过不断填入有用数据，发现合适的产品管理结构</div>
+
+  </div>
+</div>
+
+<footer>来源：data/profile/qtcloud-product/requirement.md · 共 6 活动 / 11 任务 / 23 条故事</footer>
+
+<script>
+  const input = document.getElementById('filter');
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    document.querySelectorAll('.story').forEach(s => {
+      s.classList.toggle('hidden', q !== '' && !s.textContent.toLowerCase().includes(q));
+    });
+  });
+</script>
+
+</body>
+</html>
