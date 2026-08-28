@@ -2,8 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+- Upgrade index.md: 从技术档案索引升级为业务说明文档，面向普通用户
+
 ### Added
-- Add index.md: 量潮产品研发档案索引，总结29个产品体系全景
 - Add product profile for qtcrowd (量潮众包), based on quanttide-tech intention/journal
 
 ## [0.1.1] - 2026-06-28
