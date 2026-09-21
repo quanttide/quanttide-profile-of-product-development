@@ -23,6 +23,7 @@
   header { max-width: 1240px; margin: 0 auto 18px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
   header h1 { font-size: 24px; font-weight: 700; }
   header .meta { font-size: 13px; color: var(--muted); }
+  header a { color: #4f7cff; text-decoration: none; }
   .badges { display: flex; gap: 8px; flex-wrap: wrap; }
   .badge { font-size: 13px; color: var(--muted); background: #eef1f5; border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; }
   .badge b { color: var(--text); }
@@ -37,56 +38,43 @@
   /* 图例 */
   .legend { display: flex; flex-wrap: wrap; gap: 10px 22px; }
   .lg { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; max-width: 250px; }
-  .lg .sw { flex: none; width: 30px; height: 30px; border-radius: 3px; margin-top: 2px; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+  .lg .sw { flex: none; width: 30px; height: 24px; border-radius: 4px; margin-top: 2px; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
   .lg b { display: block; font-size: 13px; }
   .lg span { color: var(--muted); font-size: 12px; display: block; line-height: 1.45; }
 
-  /* 风暴墙 */
-  .wall { background: #fbfcfd; border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px 18px; overflow-x: auto; }
-  .wall-cap { font-size: 12.5px; color: var(--muted); margin-bottom: 12px; }
-  .board { display: grid; grid-template-columns: repeat(4, minmax(205px, 1fr)) minmax(255px, 1fr); gap: 12px 14px; min-width: 1220px; align-items: stretch; }
-  .phase { font-size: 13px; font-weight: 700; color: #5b6472; padding-bottom: 7px; border-bottom: 2px solid #d8dde3; display: flex; align-items: center; gap: 7px; }
-  .phase:last-child { border-bottom-color: #b9c2cc; }
-  .phase .no { flex: none; background: #eef1f5; border: 1px solid var(--border); border-radius: 999px; padding: 0 9px; font-size: 12px; }
-  .phase .arr { margin-left: auto; color: #b9c2cc; font-weight: 400; }
-  .cell { display: flex; flex-direction: column; }
+  /* DAG 画布 */
+  .wall { background: #fbfcfd; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px 10px; overflow-x: auto; }
+  .wall-cap { font-size: 12.5px; color: var(--muted); margin-bottom: 8px; }
+  .board-svg { display: block; min-width: 1240px; width: 100%; height: auto; }
+  .board-svg .hd { font: 600 12px "PingFang SC","Microsoft YaHei",sans-serif; fill: #8a93a1; }
+  .board-svg .tn { font: 700 13px "SF Mono",Menlo,Consolas,monospace; }
+  .board-svg .tc { font: 600 12.5px "PingFang SC","Microsoft YaHei",sans-serif; }
+  .board-svg .ts { font: 400 11px "PingFang SC","Microsoft YaHei",sans-serif; opacity: .75; }
+  .board-svg .tag { font: 700 10.5px "PingFang SC","Microsoft YaHei",sans-serif; fill: #b45309; opacity: 1; }
+  .board-svg .cap { font: 400 11px "PingFang SC","Microsoft YaHei",sans-serif; fill: #9aa2ad; }
+  .board-svg .e { fill: none; stroke: #b6bfc9; stroke-width: 1.5; }
+  .board-svg .ed { stroke-dasharray: 3 4; stroke: #c8cfd7; }
 
-  .sticky { border-radius: 2px 10px 3px 9px; box-shadow: 0 2px 4px rgba(0,0,0,.13); padding: 11px 13px; font-size: 12.5px; line-height: 1.5; position: relative; }
-  .board .sticky:nth-child(odd) { transform: rotate(-0.5deg); }
-  .board .sticky:nth-child(even) { transform: rotate(0.45deg); }
-  .sticky b.nm { display: block; font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 13px; margin-bottom: 3px; }
-  .sticky .cn { font-weight: 600; }
-  .sticky small { display: block; color: inherit; opacity: .78; font-size: 11.5px; margin-top: 3px; line-height: 1.45; }
-
-  .evt { background: #ffe8cc; border: 1px solid #f0a95c; color: #7c3f00; }
-  .evt .loop { position: absolute; top: -9px; right: -7px; background: #f08c00; color: #fff; font-size: 11px; font-weight: 700; border-radius: 999px; padding: 1px 8px; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
-
-  .note { background: #f1f3f5; border: 1px solid #dee2e6; color: #495057; font-size: 12px; padding: 9px 12px; }
-  .decision { background: #f1f3f5; border: 1.5px dashed #adb5bd; color: #6b7280; }
-  .decision b.nm { font-family: inherit; }
-
-  .agg { background: #fdf3cf; border: 1px solid #e0b84e; color: #6d5200; align-self: start; font-weight: 700; font-size: 13px; padding: 9px 14px; }
-
-  .cmd { background: #dbeafe; border: 1px solid #93c5fd; color: #1e40af; align-self: start; }
-  .cmd code { background: rgba(255,255,255,.75); border: 1px solid #bfdbfe; color: #1d4ed8; display: inline-block; margin: 2px 3px 2px 0; }
-  .cmd small { opacity: .85; }
-
-  .ledger { background: #d0ebfb; border: 1px solid #71c2ec; color: #0b5a7d; align-self: start; }
-  .readm { background: #d3f9d8; border: 1px solid #69db7c; color: #1b6e2f; align-self: start; }
-  .policy { background: #f3d9fa; border: 1px solid #daa2e8; color: #862e9c; align-self: start; }
-
-  .actors { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--muted); padding-top: 2px; }
-  .dot { flex: none; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; background: #fde68a; border: 1px solid #eab308; box-shadow: 0 1px 2px rgba(0,0,0,.12); }
-  .dot.ai { background: #e9d5ff; border-color: #a855f7; }
-
-  .into { font-size: 11.5px; color: var(--muted); margin-bottom: 5px; }
-  .into::before { content: "◀ "; color: #b9c2cc; }
+  g.evt { fill: #7c3f00; }        g.evt rect { fill: #ffe8cc; stroke: #f0a95c; stroke-width: 1.2; }
+  g.imp { fill: #8a4b00; }        g.imp rect { fill: #fff3e2; stroke: #f0a95c; stroke-width: 1.2; stroke-dasharray: 5 4; }
+  g.ann { fill: #6b7280; }        g.ann rect { fill: #f4f6f8; stroke: #adb5bd; stroke-width: 1.1; stroke-dasharray: 4 4; }
+  g.cmd { fill: #1e40af; }        g.cmd rect { fill: #dbeafe; stroke: #93c5fd; stroke-width: 1.2; }
+  g.agg { fill: #6d5200; }        g.agg rect { fill: #fdf3cf; stroke: #e0b84e; stroke-width: 1.2; }
+  g.led { fill: #0b5a7d; }        g.led rect { fill: #d0ebfb; stroke: #71c2ec; stroke-width: 1.2; }
+  g.pol { fill: #862e9c; }        g.pol rect { fill: #f3d9fa; stroke: #daa2e8; stroke-width: 1.2; }
+  g.rea { fill: #1b6e2f; }        g.rea rect { fill: #d3f9d8; stroke: #69db7c; stroke-width: 1.2; }
+  g.dec { fill: #6b7280; }        g.dec rect { fill: #f1f3f5; stroke: #adb5bd; stroke-width: 1.3; stroke-dasharray: 6 4; }
+  g.par { fill: #5b6472; }        g.par rect { fill: #fef9c3; stroke: #eab308; stroke-width: 1.2; }
+  g.par.ai rect { fill: #f3e8ff; stroke: #c084fc; }
 
   /* 候选事件墙 */
   .candidates { display: flex; flex-wrap: wrap; gap: 14px; }
   .candidate { flex: 1 1 240px; max-width: 300px; }
-  .candidate .sticky { height: 100%; }
-  .candidate .tag { display: inline-block; font-size: 11px; color: var(--muted); background: #eef1f5; border: 1px solid var(--border); border-radius: 999px; padding: 1px 9px; margin-top: 7px; }
+  .candidate .sticky { height: 100%; border-radius: 2px 10px 3px 9px; box-shadow: 0 2px 4px rgba(0,0,0,.13); padding: 11px 13px; font-size: 12.5px; line-height: 1.5; background: #f1f3f5; border: 1.5px dashed #adb5bd; color: #6b7280; }
+  .candidate b.nm { display: block; font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 13px; margin-bottom: 3px; }
+  .candidate .cn { font-weight: 600; }
+  .candidate small { display: block; opacity: .8; font-size: 11.5px; margin-top: 3px; }
+  .candidate .tagx { display: inline-block; font-size: 11px; color: var(--muted); background: #eef1f5; border: 1px solid var(--border); border-radius: 999px; padding: 1px 9px; margin-top: 7px; }
 
   footer { max-width: 1240px; margin: 4px auto 0; font-size: 12.5px; color: var(--muted); }
   footer code { white-space: normal; }
@@ -97,10 +85,11 @@
 <header>
   <div>
     <h1>qtcloud-work CLI · 事件风暴</h1>
-    <div class="meta">Big Picture 全景墙 · <code>apps/qtcloud-work/src/cli</code> 源码 × <code>docs/specification</code> 规范 · 详细字段见 <a href="domain-events.html">领域事件档案</a></div>
+    <div class="meta">DAG 全景图 · <code>apps/qtcloud-work/src/cli</code> 源码 × <code>docs/specification</code> 规范 · 字段细节见 <a href="domain-events.html">领域事件档案</a></div>
   </div>
   <div class="badges">
     <span class="badge">事实 <b>4</b></span>
+    <span class="badge">隐式 <b>6</b></span>
     <span class="badge">候选 <b>4</b></span>
     <span class="badge">设计决策 <b>2</b>（无完结事件 · 去重归下游）</span>
   </div>
@@ -109,96 +98,220 @@
 <main>
 
 <section>
-  <h2>图例<span class="sub">事件风暴的颜色语法</span></h2>
+  <h2>图例<span class="sub">实线 = 账本可验证；虚线 = 未显式建模（隐式 / 候选 / 刻意不发）</span></h2>
   <div class="legend">
-    <div class="lg"><span class="sw" style="background:#ffe8cc;border:1px solid #f0a95c;"></span><span><b>领域事件</b><span>已经发生的事实，过去时命名</span></span></div>
+    <div class="lg"><span class="sw" style="background:#ffe8cc;border:1px solid #f0a95c;"></span><span><b>领域事件</b><span>已发生的事实，账本里真实存在</span></span></div>
+    <div class="lg"><span class="sw" style="background:#fff3e2;border:1px dashed #f0a95c;"></span><span><b>隐式事实 · 在流程中</b><span>发生了但无事件名，沿主链走</span></span></div>
+    <div class="lg"><span class="sw" style="background:#f4f6f8;border:1px dashed #adb5bd;"></span><span><b>隐式事实 · 被承载</b><span>由显式事件的字段捎带，挂注释</span></span></div>
     <div class="lg"><span class="sw" style="background:#dbeafe;border:1px solid #93c5fd;"></span><span><b>命令</b><span>触发事件的 CLI 指令</span></span></div>
     <div class="lg"><span class="sw" style="background:#fdf3cf;border:1px solid #e0b84e;"></span><span><b>聚合</b><span>命令进来、事件出去的处理单元</span></span></div>
-    <div class="lg"><span class="sw" style="background:#fde68a;border:1px solid #eab308;border-radius:50%;"></span><span><b>参与者</b><span>黄圈 = 人，紫圈 = AI</span></span></div>
-    <div class="lg"><span class="sw" style="background:#d0ebfb;border:1px solid #71c2ec;"></span><span><b>事件存储</b><span>账本 events.jsonl，只增不改</span></span></div>
+    <div class="lg"><span class="sw" style="background:#fef9c3;border:1px solid #eab308;border-radius:999px;"></span><span><b>参与者</b><span>黄 = 人，紫 = AI</span></span></div>
+    <div class="lg"><span class="sw" style="background:#d0ebfb;border:1px solid #71c2ec;"></span><span><b>事件存储</b><span>events.jsonl，全图唯一汇聚点</span></span></div>
     <div class="lg"><span class="sw" style="background:#d3f9d8;border:1px solid #69db7c;"></span><span><b>读模型</b><span>下游投影 / 汇总 / 审计</span></span></div>
     <div class="lg"><span class="sw" style="background:#f3d9fa;border:1px solid #daa2e8;"></span><span><b>策略</b><span>事件驱动的规则</span></span></div>
-    <div class="lg"><span class="sw" style="background:#f1f3f5;border:1.5px dashed #adb5bd;"></span><span><b>候选 / 留白</b><span>虚线：未落盘或刻意不发</span></span></div>
-    <div class="lg"><span class="sw" style="background:#f1f3f5;border:1px solid #dee2e6;"></span><span><b>注记</b><span>约束与出处</span></span></div>
+    <div class="lg"><span class="sw" style="background:#f1f3f5;border:1.5px dashed #adb5bd;"></span><span><b>候选 / 决策</b><span>规范未落盘或刻意不发</span></span></div>
   </div>
 </section>
 
 <section>
-  <h2>风暴墙<span class="sub">左 → 右 = 账本时序；同列自下而上 = 参与者发命令，聚合处理，事实落账</span></h2>
+  <h2>事件风暴 DAG<span class="sub">左 → 右 = 因果与落账方向；同一条链自左至右：参与者发命令 →（隐式事实）→ 聚合 → 事件 → 账本</span></h2>
   <div class="wall">
-    <div class="wall-cap">时间线：① 立账本 → ② 定流程 → ③ 开工单 → ④ 记流水（循环）→ ⑤ 归账与投影。橙色便签上的每一行都是账本里真实存在的 JSONL。</div>
-    <div class="board">
+    <div class="wall-cap">四条橙色事件链是全图仅有的入账边，汇于唯一枢纽 events.jsonl；虚线节点不进账本——要么挂在承载事件的字段上，要么根本不落盘。</div>
+    <svg class="board-svg" viewBox="0 0 1500 760" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#b6bfc9"/>
+        </marker>
+      </defs>
 
-      <!-- 第一行：阶段 -->
-      <div class="phase"><span class="no">①</span>立账本</div>
-      <div class="phase"><span class="no">②</span>定流程</div>
-      <div class="phase"><span class="no">③</span>开工单</div>
-      <div class="phase"><span class="no">④</span>记流水 ×N</div>
-      <div class="phase"><span class="no">⑤</span>归账与投影 <span class="arr">→</span></div>
+      <!-- 列头 -->
+      <text class="hd" x="84" y="26" text-anchor="middle">参与者</text>
+      <text class="hd" x="305" y="26" text-anchor="middle">命令</text>
+      <text class="hd" x="565" y="26" text-anchor="middle">隐式事实（在流程中）</text>
+      <text class="hd" x="790" y="26" text-anchor="middle">聚合</text>
+      <text class="hd" x="1042" y="26" text-anchor="middle">领域事件</text>
+      <text class="hd" x="1355" y="26" text-anchor="middle">账本与下游</text>
 
-      <!-- 第二行：注记 -->
-      <div class="cell"><div class="sticky note">先于账本内一切事件——其余事件均以它为前提。<small>规范·place/workspace</small></div></div>
-      <div class="cell"><div class="sticky note">名与号双锚：凭 <code>id</code> 直认，凭名字读。<small>规范·process/workflow</small></div></div>
-      <div class="cell"><div class="sticky note">双锚随单走：<code>id</code> + <code>name</code> + <code>workflow_id</code>。<small>规范·process/work-order</small></div></div>
-      <div class="cell"><div class="sticky note">只描述追加的那一条；重建靠事件回放，不靠快照覆盖。<small>规范·process/work-record</small></div></div>
-      <div class="cell"><div class="sticky note">账本只记账：不裁决、不汇总，不替下游做决定。<small>设计立场</small></div></div>
+      <!-- 边：参与者 → 命令 -->
+      <path class="e" marker-end="url(#arw)" d="M144,166 C170,166 172,80 200,80"/>
+      <path class="e" marker-end="url(#arw)" d="M144,172 C172,172 172,282 200,282"/>
+      <path class="e" marker-end="url(#arw)" d="M144,174 C176,174 168,448 200,448"/>
+      <path class="e" marker-end="url(#arw)" d="M144,176 C180,176 160,690 200,690"/>
+      <path class="e" marker-end="url(#arw)" d="M144,592 C170,592 172,612 200,612"/>
 
-      <!-- 第三行：领域事件 -->
-      <div class="cell"><div class="sticky evt"><b class="nm">WorkspaceCreated</b><span class="cn">工作区已创建</span><small>负载仅公共三样：event / at / workspace_id</small></div></div>
-      <div class="cell"><div class="sticky evt"><b class="nm">WorkflowCreated</b><span class="cn">工作流已创建</span><small>声明全文 + 派生凭证（id / name / steps / criteria）</small></div></div>
-      <div class="cell"><div class="sticky evt"><b class="nm">WorkOrderCreated</b><span class="cn">工单已创建</span><small>order_id + name + workflow_id + 工单封面全文</small></div></div>
-      <div class="cell"><div class="sticky evt"><span class="loop">×N</span><b class="nm">WorkRecorded</b><span class="cn">工作记录已追加</span><small>record_id + seq + step_id + 记录全文；每走一步落一条</small></div></div>
-      <div class="cell"><div class="sticky decision"><b class="nm">WorkOrderCompleted ✗</b><span class="cn">刻意不发</span><small>完结是推导，不是事实发生——每步已由 WorkRecorded 记讫，下游吃流水自己投影「完结」</small></div></div>
+      <!-- 边：主链 -->
+      <path class="e" marker-end="url(#arw)" d="M410,78 L470,78"/>
+      <path class="e" marker-end="url(#arw)" d="M660,78 L715,78"/>
+      <path class="e" marker-end="url(#arw)" d="M865,78 C895,78 895,80 925,80"/>
+      <path class="e" marker-end="url(#arw)" d="M410,284 L470,284"/>
+      <path class="e" marker-end="url(#arw)" d="M660,284 L715,284"/>
+      <path class="e" marker-end="url(#arw)" d="M865,284 L925,284"/>
+      <path class="e" marker-end="url(#arw)" d="M410,448 C560,448 565,480 715,480"/>
+      <path class="e" marker-end="url(#arw)" d="M410,612 C560,612 565,494 715,494"/>
+      <path class="e" marker-end="url(#arw)" d="M410,690 C560,690 565,508 715,508"/>
+      <path class="e" marker-end="url(#arw)" d="M865,480 C895,480 895,452 925,452"/>
+      <path class="e" marker-end="url(#arw)" d="M865,508 C895,508 895,606 925,606"/>
 
-      <!-- 第四行：聚合 / 事件存储 -->
-      <div class="cell"><div class="sticky agg">工作区聚合</div></div>
-      <div class="cell"><div class="sticky agg">工作流聚合</div></div>
-      <div class="cell"><div class="sticky agg">工单聚合</div></div>
-      <div class="cell"><div class="sticky agg">工单聚合（续）</div></div>
-      <div class="cell"><div class="into">四类事件统一落入</div><div class="sticky ledger"><b class="nm">events.jsonl</b>账本 · 只增不改<small>追加写 JSONL，一条一行；秒级时刻，字符串比较即时间比较</small></div></div>
+      <!-- 边：事件 → 账本（fan-in） -->
+      <path class="e" marker-end="url(#arw)" d="M1160,80 C1212,80 1198,310 1250,312"/>
+      <path class="e" marker-end="url(#arw)" d="M1160,284 C1212,284 1198,318 1250,320"/>
+      <path class="e" marker-end="url(#arw)" d="M1160,448 C1212,448 1198,326 1250,328"/>
+      <path class="e" marker-end="url(#arw)" d="M1160,612 C1212,612 1198,334 1250,336"/>
 
-      <!-- 第五行：命令 / 读模型 -->
-      <div class="cell"><div class="sticky cmd"><code>任意命令</code><small>首次触碰账本时自动补落（隐式，无对应子命令）</small></div></div>
-      <div class="cell"><div class="sticky cmd"><code>workflow create</code><code>workflow import</code><small>新建与导入各落一条</small></div></div>
-      <div class="cell"><div class="sticky cmd"><code>order create</code></div></div>
-      <div class="cell"><div class="sticky cmd"><code>order next</code><small>AI 走一步，成功即落账</small><code>order done</code><small>人做完记一笔</small></div></div>
-      <div class="cell"><div class="sticky readm"><b class="nm">下游投影</b>汇总 / 审计 / 完结判定<small>吃事件流水自己推，不回查账本</small></div></div>
+      <!-- 边：账本 → 下游 -->
+      <path class="e" marker-end="url(#arw)" d="M1355,354 L1355,392"/>
+      <path class="e" marker-end="url(#arw)" d="M1355,448 L1355,486"/>
+      <path class="e" marker-end="url(#arw)" d="M1355,554 L1355,596"/>
+      <text class="cap" x="1363" y="580">吃流水自己推</text>
 
-      <!-- 第六行：参与者 / 策略 -->
-      <div class="cell"><div class="actors"><span class="dot">👤</span>知识工作者</div></div>
-      <div class="cell"><div class="actors"><span class="dot">👤</span><span class="dot ai">🤖</span>人 / AI</div></div>
-      <div class="cell"><div class="actors"><span class="dot">👤</span><span class="dot ai">🤖</span>人 / AI</div></div>
-      <div class="cell"><div class="actors"><span class="dot ai">🤖</span>AI 走<span class="dot">👤</span>人记</div></div>
-      <div class="cell"><div class="sticky policy"><b class="nm">幂等去重</b>同一 <code>id</code> 的事件重放视作重放，不二次落账<small>去重是下游的事，账本只管记</small></div></div>
+      <!-- 边：注释挂靠（虚线） -->
+      <path class="e ed" marker-end="url(#arw)" d="M1042,114 L1042,150"/>
+      <path class="e ed" marker-end="url(#arw)" d="M1042,646 C1020,662 1000,664 981,676"/>
+      <path class="e ed" marker-end="url(#arw)" d="M1042,646 C1064,662 1084,664 1104,676"/>
 
-    </div>
-  </div>
-</section>
+      <!-- 参与者 -->
+      <g class="par"><rect x="24" y="140" width="120" height="64" rx="32"/>
+        <text x="84" y="168" text-anchor="middle" style="font-size:17px">👤</text>
+        <text x="84" y="190" text-anchor="middle" class="tc">知识工作者</text>
+      </g>
+      <g class="par ai"><rect x="24" y="560" width="120" height="64" rx="32"/>
+        <text x="84" y="588" text-anchor="middle" style="font-size:17px">🤖</text>
+        <text x="84" y="610" text-anchor="middle" class="tc">AI 协作</text>
+      </g>
 
-<section>
-  <h2>候选事件墙<span class="sub">规范已声明 · CLI 尚未落盘——贴在这里，等它们发生</span></h2>
-  <div class="candidates">
-    <div class="candidate"><div class="sticky decision"><b class="nm">WorkspaceUpdated</b><span class="cn">工作区已更新</span><small>工作区聚合 · 身份变更时落</small></div><span class="tag">规范·place/workspace</span></div>
-    <div class="candidate"><div class="sticky decision"><b class="nm">MaterialImported</b><span class="cn">材料已收录</span><small>材料聚合 · material 模块未接事件落盘</small></div><span class="tag">规范·index</span></div>
-    <div class="candidate"><div class="sticky decision"><b class="nm">ArtifactProduced</b><span class="cn">产物已生成</span><small>产物聚合 · artifact 模块未接事件落盘</small></div><span class="tag">规范·index</span></div>
-    <div class="candidate"><div class="sticky decision"><b class="nm">ArtifactAccepted</b><span class="cn">产物已验收</span><small>产物聚合 · 验收动作未定义</small></div><span class="tag">规范·index</span></div>
+      <!-- 命令 -->
+      <g class="cmd"><rect x="200" y="52" width="210" height="52" rx="6"/>
+        <text x="305" y="74" text-anchor="middle" class="tc">任意命令（写动作）</text>
+        <text x="305" y="92" text-anchor="middle" class="ts">首次触碰账本时自动触发</text>
+      </g>
+      <g class="cmd"><rect x="200" y="252" width="210" height="64" rx="6"/>
+        <text x="305" y="273" text-anchor="middle" class="tn">workflow create</text>
+        <text x="305" y="291" text-anchor="middle" class="tn">workflow import</text>
+        <text x="305" y="308" text-anchor="middle" class="ts">新建 / 导入 · 人、AI 均可</text>
+      </g>
+      <g class="cmd"><rect x="200" y="422" width="210" height="52" rx="6"/>
+        <text x="305" y="444" text-anchor="middle" class="tn">order create</text>
+        <text x="305" y="462" text-anchor="middle" class="ts">开工单 · 人、AI 均可</text>
+      </g>
+      <g class="cmd"><rect x="200" y="586" width="210" height="52" rx="6"/>
+        <text x="305" y="608" text-anchor="middle" class="tn">order next</text>
+        <text x="305" y="626" text-anchor="middle" class="ts">AI 走一步，成功即落账</text>
+      </g>
+      <g class="cmd"><rect x="200" y="664" width="210" height="52" rx="6"/>
+        <text x="305" y="686" text-anchor="middle" class="tn">order done</text>
+        <text x="305" y="704" text-anchor="middle" class="ts">人做完记一笔</text>
+      </g>
+
+      <!-- 隐式事实 · 在流程中 -->
+      <g class="imp"><rect x="470" y="50" width="190" height="56" rx="6"/>
+        <text x="478" y="66" class="tag">隐</text>
+        <text x="565" y="74" text-anchor="middle" class="tc">账本已开设</text>
+        <text x="565" y="94" text-anchor="middle" class="ts">目录创建 · 无事件名</text>
+      </g>
+      <g class="imp"><rect x="470" y="256" width="190" height="56" rx="6"/>
+        <text x="478" y="272" class="tag">隐</text>
+        <text x="565" y="280" text-anchor="middle" class="tc">凭证已派生</text>
+        <text x="565" y="300" text-anchor="middle" class="ts">「工作区 id + 名字」现算</text>
+      </g>
+
+      <!-- 聚合 -->
+      <g class="agg"><rect x="715" y="54" width="150" height="48" rx="6"/>
+        <text x="790" y="83" text-anchor="middle" class="tc">工作区聚合</text>
+      </g>
+      <g class="agg"><rect x="715" y="260" width="150" height="48" rx="6"/>
+        <text x="790" y="289" text-anchor="middle" class="tc">工作流聚合</text>
+      </g>
+      <g class="agg"><rect x="715" y="470" width="150" height="48" rx="6"/>
+        <text x="790" y="499" text-anchor="middle" class="tc">工单聚合</text>
+      </g>
+
+      <!-- 领域事件 -->
+      <g class="evt"><rect x="925" y="46" width="235" height="68" rx="6"/>
+        <text x="1042" y="70" text-anchor="middle" class="tn">WorkspaceCreated</text>
+        <text x="1042" y="88" text-anchor="middle" class="tc">工作区已创建</text>
+        <text x="1042" y="105" text-anchor="middle" class="ts">负载仅公共三样</text>
+      </g>
+      <g class="evt"><rect x="925" y="250" width="235" height="68" rx="6"/>
+        <text x="1042" y="274" text-anchor="middle" class="tn">WorkflowCreated</text>
+        <text x="1042" y="292" text-anchor="middle" class="tc">工作流已创建</text>
+        <text x="1042" y="309" text-anchor="middle" class="ts">声明全文 + 派生凭证</text>
+      </g>
+      <g class="evt"><rect x="925" y="414" width="235" height="68" rx="6"/>
+        <text x="1042" y="438" text-anchor="middle" class="tn">WorkOrderCreated</text>
+        <text x="1042" y="456" text-anchor="middle" class="tc">工单已创建</text>
+        <text x="1042" y="473" text-anchor="middle" class="ts">id + name + workflow_id + 全文</text>
+      </g>
+      <g class="evt"><rect x="925" y="578" width="235" height="68" rx="6"/>
+        <circle cx="1148" cy="590" r="12" fill="#f08c00"/>
+        <text x="1148" y="594" text-anchor="middle" style="font:700 11px sans-serif; fill:#fff">×N</text>
+        <text x="1042" y="602" text-anchor="middle" class="tn">WorkRecorded</text>
+        <text x="1042" y="620" text-anchor="middle" class="tc">工作记录已追加</text>
+        <text x="1042" y="637" text-anchor="middle" class="ts">record_id + seq + step_id + 全文</text>
+      </g>
+
+      <!-- 隐式事实 · 被承载（注释） -->
+      <g class="ann"><rect x="925" y="150" width="235" height="44" rx="6"/>
+        <text x="933" y="166" class="tag">隐</text>
+        <text x="1042" y="168" text-anchor="middle" class="tc">身份已登记</text>
+        <text x="1042" y="186" text-anchor="middle" class="ts">被同批 WorkspaceCreated 捎带</text>
+      </g>
+      <g class="ann"><rect x="925" y="676" width="112" height="60" rx="6"/>
+        <text x="981" y="700" text-anchor="middle" class="tc" style="font-size:12px">步骤已放行</text>
+        <text x="981" y="719" text-anchor="middle" class="ts" style="font-family:'SF Mono',Menlo,monospace">is_succeeded</text>
+      </g>
+      <g class="ann"><rect x="1048" y="676" width="112" height="60" rx="6"/>
+        <text x="1104" y="700" text-anchor="middle" class="tc" style="font-size:12px">页码已分配</text>
+        <text x="1104" y="719" text-anchor="middle" class="ts">seq · 不跳号</text>
+      </g>
+
+      <!-- 账本与下游 -->
+      <g class="led"><rect x="1250" y="290" width="210" height="64" rx="6"/>
+        <text x="1355" y="314" text-anchor="middle" class="tn">events.jsonl</text>
+        <text x="1355" y="332" text-anchor="middle" class="tc">账本 · 只增不改</text>
+        <text x="1355" y="348" text-anchor="middle" class="ts">追加写 JSONL · 一条一行</text>
+      </g>
+      <g class="pol"><rect x="1250" y="392" width="210" height="56" rx="6"/>
+        <text x="1355" y="415" text-anchor="middle" class="tc">幂等去重（策略）</text>
+        <text x="1355" y="435" text-anchor="middle" class="ts">按 id 去重 · 重放视作重放</text>
+      </g>
+      <g class="rea"><rect x="1250" y="486" width="210" height="68" rx="6"/>
+        <text x="1355" y="510" text-anchor="middle" class="tn">下游投影</text>
+        <text x="1355" y="528" text-anchor="middle" class="tc">汇总 / 审计 / 完结判定</text>
+        <text x="1355" y="545" text-anchor="middle" class="ts">吃流水自己推，不回查</text>
+      </g>
+      <g class="dec"><rect x="1250" y="596" width="210" height="76" rx="6"/>
+        <text x="1355" y="621" text-anchor="middle" class="tn">WorkOrderCompleted ✗</text>
+        <text x="1355" y="640" text-anchor="middle" class="tc">刻意不发</text>
+        <text x="1355" y="659" text-anchor="middle" class="ts">完结是推导，不是事实发生</text>
+      </g>
+    </svg>
   </div>
 </section>
 
 <section>
   <h2>读图说明</h2>
   <ul class="tight">
-    <li><b>只贴事实</b>：实线橙色便签都是账本里可验证的 JSONL 行；虚线便签是候选（规范声明未实现）或刻意留白（设计决策），一眼可辨。</li>
-    <li><b>没有策略便签在事件链上</b>：CLI 是命令式工具，没有后台事件驱动策略——粉色只出现在下游（幂等去重），缺席即事实。</li>
-    <li><b>④ 是循环不是终点</b>：WorkRecorded ×N 是工单生命的常态，⑤ 号列的虚线「WorkOrderCompleted ✗」宣告时间线刻意不收口。</li>
-    <li><b>字段级细节</b>（负载形状、公共信封、与规范的逐条约束）见 <a href="domain-events.html">领域事件档案</a>，本页只负责风暴视角的全景。</li>
+    <li><b>唯一汇聚点</b>：全图只有一处合流——四条显式事件链 fan-in 到 <code>events.jsonl</code>，DAG 一眼显出账本的枢纽地位；入账边之外再无流向账本的线。</li>
+    <li><b>虚线不进账本</b>：隐式事实分两种挂法——「在流程中」（账本已开设、凭证已派生）沿主链走但没有事件名；「被承载」（身份登记、步骤放行、页码分配）以虚线挂在承载事件的字段上（<code>is_succeeded</code>、<code>seq</code>、同批捎带）。</li>
+    <li><b>完结在账本之外</b>：右下角 <code>WorkOrderCompleted ✗</code> 由读模型从流水推导，DAG 到账本为止、不画完结入账边——时间线刻意不收口。</li>
+    <li><b>要不要转显式</b>：六条隐式事实的逐条处置（判据：会不会与现有事件双记同一事实）见 <a href="domain-events.html">领域事件档案 · 隐式事件</a>；规范声明、CLI 未落盘的候选事件见下方候选墙。</li>
   </ul>
+</section>
+
+<section>
+  <h2>候选事件墙<span class="sub">规范已声明 · CLI 尚未落盘——贴在这里，等它们发生</span></h2>
+  <div class="candidates">
+    <div class="candidate"><div class="sticky"><b class="nm">WorkspaceUpdated</b><span class="cn">工作区已更新</span><small>工作区聚合 · 身份变更时落</small></div><span class="tagx">规范·place/workspace</span></div>
+    <div class="candidate"><div class="sticky"><b class="nm">MaterialImported</b><span class="cn">材料已收录</span><small>材料聚合 · material 模块未接事件落盘</small></div><span class="tagx">规范·index</span></div>
+    <div class="candidate"><div class="sticky"><b class="nm">ArtifactProduced</b><span class="cn">产物已生成</span><small>产物聚合 · artifact 模块未接事件落盘</small></div><span class="tagx">规范·index</span></div>
+    <div class="candidate"><div class="sticky"><b class="nm">ArtifactAccepted</b><span class="cn">产物已验收</span><small>产物聚合 · 验收动作未定义</small></div><span class="tagx">规范·index</span></div>
+  </div>
 </section>
 
 </main>
 
 <footer>
-  来源：<code>src/cli/src/{events,order/events,workflow/events,workspace/events}.rs</code> ·
+  来源：<code>src/cli/src/{events,order/events,workflow/events,workspace/events,ids,locate}.rs</code> ·
   规范：<code>docs/specification/{index,place/workspace,process/workflow,process/work-order,process/work-record}.md</code> ·
   整理：2026-09
 </footer>
