@@ -137,6 +137,7 @@
     <span class="badge">领域事件 <b>4</b></span>
     <span class="badge">聚合 <b>3</b>（工作区 / 工作流 / 工单）</span>
     <span class="badge">账本 <b>events.jsonl</b> · 只增不改</span>
+    <span class="badge">隐式事实 <b>6</b></span>
   </div>
 </header>
 
@@ -325,6 +326,55 @@
       </ul>
     </div>
   </div>
+</section>
+
+<section>
+  <h2>隐式事件<span class="sub">事实上发生、但未被显式建模的事——识别后先问“要不要转显式”</span></h2>
+  <p style="font-size:13.5px; margin-bottom:10px;">识别口径：盯持久化副作用与触发条件，不问“命令是什么”，问“让世界发生了什么不可逆的变化”。转显式的判据只有一条：<b>会不会与现有事件双记同一事实</b>。</p>
+  <table>
+    <thead>
+      <tr><th>隐式事实</th><th>形态</th><th>现状与承载</th><th>代码锚点</th><th>处置</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>账本已开设</td><td>触发隐式</td>
+        <td>目录创建无事件、无事件名；先于 <code>WorkspaceCreated</code> 发生</td>
+        <td><code>locate/mod.rs</code>·<code>ensure()</code></td>
+        <td>暂不转显式——目录结构属实现细节</td>
+      </tr>
+      <tr>
+        <td>工作区身份已登记</td><td>命名隐式</td>
+        <td>身份文件落盘，由同批的 <code>WorkspaceCreated</code> 捎带</td>
+        <td><code>locate/mod.rs</code>·<code>ensure()</code></td>
+        <td>已承载，无需处理</td>
+      </tr>
+      <tr>
+        <td>凭证已派生</td><td>边界隐式</td>
+        <td>人写的定义不带凭证，按「工作区 id + 名字」现算，不落盘</td>
+        <td><code>ids.rs</code>·<code>derive()</code></td>
+        <td>永不转显式——落盘等于同一件事记两处</td>
+      </tr>
+      <tr>
+        <td>步骤已放行</td><td>承载隐式</td>
+        <td>判定结果由 <code>WorkRecorded</code> 的 <code>is_succeeded</code> 字段承载</td>
+        <td><code>order/execute.rs</code></td>
+        <td>不转——独立事件会与 <code>WorkRecorded</code> 双记</td>
+      </tr>
+      <tr>
+        <td>页码已分配</td><td>承载隐式</td>
+        <td>账本方分配 <code>seq</code>，自 1 起严格递增不跳号</td>
+        <td><code>order/model.rs</code>·<code>WorkRecord</code></td>
+        <td>不转——由 <code>seq</code> 承载即足够</td>
+      </tr>
+      <tr>
+        <td>工单已完结</td><td>缺席隐式</td>
+        <td>刻意不发——完结是推导，不是事实发生</td>
+        <td>—</td>
+        <td>设计决策，见<a href="event-storming.html">事件风暴墙</a>·⑤</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">六条隐式事实，零条建议转显式——qtcloud-work 的取舍是「一事实一事件，承载即足够」：显式账本只记不可推导的事实。</p>
 </section>
 
 <section>
