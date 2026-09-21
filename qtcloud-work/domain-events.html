@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>qtcloud-work CLI · 领域事件</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --card-bg: #ffffff;
+    --border: #e3e6ea;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --accent: #4f7cff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 24px;
+    line-height: 1.6;
+  }
+  header {
+    max-width: 1080px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  header h1 { font-size: 24px; font-weight: 700; }
+  header .meta { font-size: 13px; color: var(--muted); }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    font-size: 13px;
+    color: var(--muted);
+    background: #eef1f5;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 14px;
+  }
+  .badge b { color: var(--text); }
+  main { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+  section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    padding: 20px 24px;
+  }
+  h2 { font-size: 17px; font-weight: 700; margin-bottom: 14px; }
+  h2 .sub { font-size: 13px; font-weight: 400; color: var(--muted); margin-left: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 13px; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  code {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    background: #f0f2f5;
+    border-radius: 5px;
+    padding: 1.5px 6px;
+    white-space: nowrap;
+  }
+  pre {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    background: #f6f8fa;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    line-height: 1.55;
+  }
+  .event {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .event:last-child { margin-bottom: 0; }
+  .event .head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+  .event .head .name { font-size: 15px; font-weight: 700; font-family: "SF Mono", Menlo, Consolas, monospace; }
+  .event .head .cn { font-size: 14px; font-weight: 600; }
+  .event .head .agg {
+    font-size: 12px;
+    color: var(--accent);
+    background: rgba(79,124,255,.08);
+    border: 1px solid rgba(79,124,255,.25);
+    border-radius: 999px;
+    padding: 1px 10px;
+  }
+  .event .trigger { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .event .payload { font-size: 13.5px; }
+  .event .payload .label { color: var(--muted); font-size: 12.5px; margin: 8px 0 4px; }
+  ul.tight { padding-left: 20px; font-size: 13.5px; }
+  ul.tight li { margin-bottom: 4px; }
+  .note { font-size: 13px; color: var(--muted); margin-top: 12px; }
+  footer { max-width: 1080px; margin: 20px auto 0; font-size: 12.5px; color: var(--muted); }
+  footer code { white-space: normal; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>qtcloud-work CLI · 领域事件</h1>
+    <div class="meta">从 <code>apps/qtcloud-work/src/cli</code> 源码识别 · 对齐 <code>docs/specification</code> 规范</div>
+  </div>
+  <div class="badges">
+    <span class="badge">领域事件 <b>4</b></span>
+    <span class="badge">聚合 <b>3</b>（工作区 / 工作流 / 工单）</span>
+    <span class="badge">账本 <b>events.jsonl</b> · 只增不改</span>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <h2>事件总览<span class="sub">事件名以代码常量为准</span></h2>
+  <table>
+    <thead>
+      <tr><th>事件</th><th>中文名</th><th>聚合</th><th>触发</th><th>负载要点</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>WorkspaceCreated</code></td><td>工作区已创建</td><td>工作区</td>
+        <td>首次开账本时自动落（<code>Locate::ensure</code>）</td>
+        <td>仅公共三样；先于账本内一切事件</td>
+      </tr>
+      <tr>
+        <td><code>WorkflowCreated</code></td><td>工作流已创建</td><td>工作流</td>
+        <td><code>workflow create</code> / <code>workflow import</code></td>
+        <td>声明全文 + 派生凭证</td>
+      </tr>
+      <tr>
+        <td><code>WorkOrderCreated</code></td><td>工单已创建</td><td>工单</td>
+        <td><code>order create</code></td>
+        <td>工单凭证 + 名字 + 所引工作流 + 工单全文</td>
+      </tr>
+      <tr>
+        <td><code>WorkRecorded</code></td><td>工作记录已追加</td><td>工单</td>
+        <td><code>order next</code>（AI 走一步）/ <code>order done</code>（人记一笔）</td>
+        <td>记录凭证 + 页码 + 步骤凭证 + 记录全文</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>公共信封<span class="sub">落盘于 <code>&lt;账本&gt;/events.jsonl</code>，一条一行</span></h2>
+  <p style="font-size:13.5px; margin-bottom:10px;">所有事件共享三个公共字段，聚合自有字段随后；时刻为秒级本地时间（字符串比较即时间比较）：</p>
+  <pre>{
+  "event": "WorkOrderCreated",
+  "at": "2026-09-02T10:30:00",
+  "workspace_id": "……",
+  "order_id": "……", "name": "……", "workflow_id": "……",
+  "order": { "……": "工单 YAML 全文" }
+}</pre>
+</section>
+
+<section>
+  <h2>事件明细</h2>
+
+  <div class="event">
+    <div class="head">
+      <span class="name">WorkspaceCreated</span><span class="cn">工作区已创建</span><span class="agg">工作区聚合</span>
+    </div>
+    <div class="trigger">触发：任何命令首次触碰账本时，若工作区身份文件不存在则先建身份并落此事件——宁可落盘不可空算。</div>
+    <div class="payload">
+      <div class="label">负载</div>
+      <ul class="tight"><li>无附加字段，仅公共三样（<code>event</code> / <code>at</code> / <code>workspace_id</code>）</li></ul>
+      <div class="label">约束（规范·place/workspace）</div>
+      <ul class="tight">
+        <li>先于账本内一切事件——工作流、工单、记录、材料、产物事件均以它为前提；</li>
+        <li>负载至少携带工作区 <code>id</code>，供下游投影、汇总与审计使用。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="head">
+      <span class="name">WorkflowCreated</span><span class="cn">工作流已创建</span><span class="agg">工作流聚合</span>
+    </div>
+    <div class="trigger">触发：<code>qtcloud-work workflow create</code>（新建）与 <code>workflow import</code>（导入）各落一条。</div>
+    <div class="payload">
+      <div class="label">负载</div>
+      <ul class="tight">
+        <li><code>workflow_id</code>：派生凭证；</li>
+        <li><code>name</code>：工作流名；</li>
+        <li><code>workflow</code>：声明全文（<code>id</code> / <code>name</code> / <code>description</code> / <code>steps[]</code>，每步含 <code>id</code> / <code>name</code> / <code>description</code> / <code>executor</code> / <code>criteria[]</code>，判据含 <code>executor</code> 与 <code>description</code>）。</li>
+      </ul>
+      <div class="label">约束（规范·process/workflow）</div>
+      <ul class="tight"><li>负载至少携带工作流名、工作区 <code>id</code> 与 <code>workflow_id</code>——名与号双锚，供下游投影、汇总与审计使用。</li></ul>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="head">
+      <span class="name">WorkOrderCreated</span><span class="cn">工单已创建</span><span class="agg">工单聚合</span>
+    </div>
+    <div class="trigger">触发：<code>qtcloud-work order create</code>。</div>
+    <div class="payload">
+      <div class="label">负载</div>
+      <ul class="tight">
+        <li><code>order_id</code>：工单凭证；</li>
+        <li><code>name</code>：工单名；</li>
+        <li><code>workflow_id</code>：所引工作流凭证；</li>
+        <li><code>order</code>：工单 YAML 全文（封面）。</li>
+      </ul>
+      <div class="label">约束（规范·process/work-order）</div>
+      <ul class="tight">
+        <li>双锚随单走，跨区下游凭 <code>id</code> 直认，凭名字读；</li>
+        <li><b>无完结事件</b>：走完没走完是推导，不是事实发生——每一步的发生已由 <code>WorkRecorded</code> 逐条记讫，「完结」由下游吃流水自己投影；</li>
+        <li>下游按工单 <code>id</code> 去重，重放幂等消化。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="head">
+      <span class="name">WorkRecorded</span><span class="cn">工作记录已追加</span><span class="agg">工单聚合</span>
+    </div>
+    <div class="trigger">触发：<code>qtcloud-work order next</code>（AI 执行一步成功后落账）与 <code>order done</code>（人做完记一笔）。</div>
+    <div class="payload">
+      <div class="label">负载</div>
+      <ul class="tight">
+        <li><code>order_id</code> / <code>order_name</code>：所属工单双锚；</li>
+        <li><code>record_id</code>：记录凭证；</li>
+        <li><code>seq</code>：记录页码；</li>
+        <li><code>step_id</code>：步骤凭证；</li>
+        <li><code>record</code>：记录 YAML 全文。</li>
+      </ul>
+      <div class="label">约束（规范·process/work-record）</div>
+      <ul class="tight">
+        <li>流水里已双落锚点，事件原样带走，跨区下游凭 <code>step_id</code> 直认，零回查；</li>
+        <li>只描述追加的那一条，不含全量流水——重建靠事件序列回放，不靠快照覆盖；</li>
+        <li>下游按记录 <code>id</code> 去重对账，重放幂等消化，不二次落账。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>设计约束<span class="sub">账本机制</span></h2>
+  <ul class="tight">
+    <li><b>只增不改</b>：事件文件为追加写 JSONL，一条一行；事件名与负载形状由各聚合自定义，公共字段统一在此层补齐。</li>
+    <li><b>幂等去重是下游的事</b>：账本只记账，下游按 <code>id</code> 去重——同一 <code>id</code> 的事件重放视作重放。</li>
+    <li><b>秒级时刻</b>：不引 chrono，取系统本地时间（<code>%Y-%m-%dT%H:%M:%S</code>），按发生顺序记，字符串比较即时间比较。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>与规范的差异<span class="sub">规范声明、CLI 尚未落盘的事件</span></h2>
+  <ul class="tight">
+    <li><code>WorkspaceUpdated</code>（工作区已更新）——规范·place/workspace 声明，CLI 未实现；</li>
+    <li><code>MaterialImported</code>（材料已收录）、<code>ArtifactProduced</code>（产物已生成）、<code>ArtifactAccepted</code>（产物已验收）——规范·index 声明，CLI 的材料与产物模块尚未落事件。</li>
+  </ul>
+  <p class="note">规范另以短语记名（如 <code>Workflow Created</code>），代码常量为连写形式，以代码为准。</p>
+</section>
+
+</main>
+
+<footer>
+  来源：<code>src/cli/src/{events,order/events,workflow/events,workspace/events}.rs</code> ·
+  触发链：<code>{workflow,order}/actions.rs</code>、<code>locate/mod.rs</code> ·
+  规范：<code>docs/specification/{place/workspace,process/workflow,process/work-order,process/work-record}.md</code> ·
+  整理：2026-09
+</footer>
+
+</body>
+</html>
